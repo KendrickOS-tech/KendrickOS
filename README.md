@@ -17,6 +17,20 @@ KendrickOS is a from-scratch operating system project focused on low-level progr
 - **Architecture:** x86
 - **Boot Method:** Legacy BIOS
 
+## Bootloader and kernel
+
+This repository now includes a minimal BIOS-based bootloader and kernel connected together:
+
+- `bootloader.asm` loads the kernel from disk into memory at `0x1000:0x0000` and jumps into it.
+- `kernel.asm` is the entry point for the loaded kernel and prints a welcome message.
+- `build.sh` assembles both files and creates a bootable `build/kendrickos.img` image.
+
+Run the build with:
+
+```bash
+bash build.sh
+```
+
 ## 🚧 Project Status
 
 KendrickOS is currently under development. Features and compatibility may change as development continues.
