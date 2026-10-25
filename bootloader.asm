@@ -1,6 +1,6 @@
 %define KERNEL_SEGMENT 0x1000
 %define KERNEL_OFFSET  0x0000
-%define KERNEL_SECTORS 6
+%define KERNEL_SECTORS 12
 
 [BITS 16]
 [ORG 0x7C00]
@@ -17,13 +17,12 @@ start:
     mov si, loading_msg
     call print_string
 
-    ; Read the kernel from the disk after the boot sector.
-    mov ah, 0x02              ; BIOS read sectors
-    mov al, KERNEL_SECTORS    ; number of sectors to read
-    mov ch, 0x00              ; cylinder 0
-    mov dh, 0x00              ; head 0
-    mov cl, 0x02              ; start reading at sector 2
-    mov dl, 0x80              ; drive 0 (first hard disk)
+    mov ah, 0x02
+    mov al, KERNEL_SECTORS
+    mov ch, 0x00
+    mov dh, 0x00
+    mov cl, 0x02
+    mov dl, 0x00
     mov bx, KERNEL_OFFSET
     mov es, KERNEL_SEGMENT
     int 0x13
@@ -32,12 +31,10 @@ start:
     mov si, loaded_msg
     call print_string
 
-    ; Jump into the loaded kernel at 0x1000:0x0000.
     jmp KERNEL_SEGMENT:KERNEL_OFFSET
 
 print_string:
     pusha
-
 .loop:
     lodsb
     or al, al
@@ -46,7 +43,6 @@ print_string:
     mov bh, 0x00
     int 0x10
     jmp .loop
-
 .done:
     popa
     ret
@@ -59,9 +55,8 @@ disk_error:
     jmp $
 
 loading_msg db "Loading KendrickOS kernel...", 13, 10, 0
-loaded_msg  db "Kernel loaded. Jumping to kernel...", 13, 10, 0
+loaded_msg db "Kernel loaded. Jumping to kernel...", 13, 10, 0
 disk_error_msg db "Disk read error.", 13, 10, 0
 
-; Boot sector signature.
 times 510 - ($ - $$) db 0
 dw 0xAA55
