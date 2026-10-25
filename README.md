@@ -2,48 +2,60 @@
 
 **A custom operating system built entirely in Assembly.**
 
-KendrickOS is a from-scratch operating system project focused on low-level programming, classic PC architecture, and learning how operating systems work under the hood.
+KendrickOS is a BIOS-based x86 operating system demo written from scratch in assembly. It includes a text-mode desktop shell, a terminal, a clock app, a simple calculator placeholder, and a guessing game, all running in a bootable disk image.
 
 ## ✨ Features
 
-- 🔧 **100% Assembly** — All operating system code is written in Assembly.
-- 🖥️ **Built from Scratch** — Developed as an independent operating system project.
-- ⚙️ **Low-Level Control** — Exploring direct hardware interaction and system resources.
-- 🎨 **Classic PC Style** — Inspired by classic desktop operating systems.
+- 🧱 **Bootloader + kernel linked together**
+- 🖥️ **Desktop-style menu interface**
+- 🖲️ **Terminal with simple commands**
+- ⏰ **Clock app**
+- 🧮 **Calculator app stub**
+- 🎮 **Guessing game**
+- 💾 **Bootable floppy-style `.img` test image**
 
-## 🛠️ Technology
+## 🛠️ Build and run
 
-- **Language:** Assembly (ASM)
-- **Architecture:** x86
-- **Boot Method:** Legacy BIOS
-
-## Bootloader and kernel
-
-This repository now includes a minimal BIOS-based bootloader and kernel connected together:
-
-- `bootloader.asm` loads the kernel from disk into memory at `0x1000:0x0000` and jumps into it.
-- `kernel.asm` is the entry point for the loaded kernel and prints a welcome message.
-- `build.sh` assembles both files and creates a bootable `build/kendrickos.img` image.
-
-Run the build with:
+From the repository root:
 
 ```bash
 bash build.sh
 ```
 
+This assembles the bootloader and kernel and creates a bootable image:
+
+- `build/kendrickos.img`
+- `KendrickOS.img`
+
+## 📥 Download the test image
+
+If you want to test it in QEMU or another x86 emulator, download the generated image here:
+
+- [KendrickOS.img](KendrickOS.img)
+
+Example emulator command:
+
+```bash
+qemu-system-i386 -fda KendrickOS.img
+```
+
+You can also boot the image in VirtualBox or Bochs using the floppy image.
+
+## 🧪 Included apps and shell
+
+- `Terminal` — simple command interface with `help`, `clear`, `echo`, `game`, `about`, and `quit`
+- `Clock` — shows current BIOS time
+- `Calculator` — placeholder app screen
+- `Guessing Game` — pick a number between 1 and 20
+- `About` — overview of the OS demo
+
 ## 🚧 Project Status
 
-KendrickOS is currently under development. Features and compatibility may change as development continues.
-
-## 📦 Source Code
-
-The source code will be made available on GitHub as development progresses.
+KendrickOS is an educational assembly-based OS project under active development. The current version is a text-mode demo focused on boot sequencing and basic user interface flow.
 
 ## 📜 License
 
 KendrickOS is licensed under the [MIT License](LICENSE).
-
-You are free to use, copy, modify, merge, publish, distribute, sublicense, and sell copies of the software, subject to the terms of the MIT License.
 
 ---
 
